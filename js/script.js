@@ -139,7 +139,7 @@ window.addEventListener('DOMContentLoaded', ()=> {
         }
     });
 
-    /* const timeModal = setTimeout(open,40000); */
+    const timeModal = setTimeout(open,40000);
     
     function showModalByScroll() {
         if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
