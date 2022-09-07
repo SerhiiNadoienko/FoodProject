@@ -221,6 +221,12 @@ window.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.menu .container').append(element);
         });
     }
+
+    /* axios.get('http://localhost:3000/menu')
+        .then(data=>
+            data.data.forEach(({img, altimg, title, descr,price}) => {
+            new MenuCard(img, altimg, title, descr,price, '.menu .container').render();
+        })); */
     // Forms
 
     const forms = document.querySelectorAll('form');
@@ -302,4 +308,149 @@ window.addEventListener('DOMContentLoaded', function() {
     this.fetch(' http://localhost:3000/menu')
     .then(data=>data.json())
     .then(res => console.log(res));
+
+    //Slider 
+
+    const slides = document.querySelectorAll('.offer__slide'),
+    prev=document.querySelector('.offer__slider-prev'),
+    next=document.querySelector('.offer__slider-next'),
+    //общее число картинок слайда
+    total = document.querySelector('#total'),
+    //акутальное число на слайде
+    current = document.querySelector('#current'),
+    //это наш главный враппер
+    slidesWrapper = document.querySelector('.offer__slider-wrapper'),
+    //получаем ширину окошка нашего главного вреппера
+    width = window.getComputedStyle(slidesWrapper).width,
+    //поле с нашими слайдерами
+    slidesField = document.querySelector(".offer__slider-inner");
+
+
+    let slideIndex =1;
+    //перменная которая показывает сколько мы отступили 
+    let offset =0;
+
+    //условия по общему показу колва слайдеров
+    if(slides.length <10) {
+        total.textContent = `0${slides.length}`;
+        current.textContent = `0${slideIndex}`;
+    } else {
+        total.textContent = ` ${slides.length}`;
+        current.textContent = slideIndex;
+    }
+
+    //устанавливаем этому блоку ширину  
+    slidesField.style.width = 100 * slides.length + '%';
+    //формируем в одну линию картинки
+    slidesField.style.display = 'flex';
+    slidesField.style.transition ='0.5s all';
+    //убираем с зоны видимости элементы за пределами нашего элемента.
+    slidesWrapper.style.overflow = 'hidden';
+    //делаем все слайды одинаковой ширины 
+    slides.forEach(slide=> {
+        slide.style.width = width;
+    });
+
+    next.addEventListener('click', ()=> {
+        //условие если уперлись в конец слайдера
+        //в width у нас 500px, мы обрезали px 
+        if(offset== +width.slice(0, width.length -2) * (slides.length -1)) {
+            offset =0;
+        } else  {
+            offset += +width.slice(0, width.length -2);
+        }
+        slidesField.style.transform = `translateX(-${offset}px)`;
+
+        // тут меняем слайдиндекс 
+        if(slideIndex == slides.length) {
+            slideIndex =1;
+        } else {
+            slideIndex++;
+        }
+
+        //тут мняем показ акутального числа относительно слайд индекса
+        if(slides.length <10) {
+            current.textContent= `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+
+    });
+
+    prev.addEventListener('click', ()=> {
+        //погда мы листаем назад и у нас первый слайд, перем. в конец
+        if( offset == 0) {
+            offset= +width.slice(0, width.length -2) * (slides.length -1);
+        } else  {
+            offset -= +width.slice(0, width.length -2);
+        }
+        slidesField.style.transform = `translateX(-${offset}px)`;
+        // тут меняем слайдиндекс 
+        if(slideIndex == 1) {
+            slideIndex =slides.length;
+        } else {
+            slideIndex--;
+        }
+        //тут мняем показ акутального числа относительно слайд индекса
+        if(slides.length <10) {
+            current.textContent= `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+
+    });
+
+ 
+    //первый вариант слайдера
+   /*  //инициализируем функцуию, которую прописали ниже.
+    showSlides(slideIndex);
+    
+    //условия по общему показу колва слайдеров
+    if(slides.length <10) {
+        total.textContent = `0${slides.length}`;
+    } else {
+        total.textContent = ` ${slides.length}`;
+    }
+    
+    
+    //фун по показу и скрытию слайдов. n=slideIndex
+    function showSlides(n) {
+        //если уперлись в конец слайдера, то ночинаем сначала
+        if(n>slides.length) {
+            slideIndex=1;
+        }
+        //если уперлись в начало слайдера.
+        if(n<1){
+            //то слайдиндекс будет равен концу.
+            slideIndex = slides.length;
+        }
+        
+        //тут скрываем все картики со слайдера
+        slides.forEach(item=> item.style.display ='none');
+        // -1 это нулевой слайд. Его мы показываем 
+         slides[slideIndex -1].style.display ='block';  
+
+        //тут меняем актуальное число слайдера
+         if(slides.length <10) {
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+    }
+    
+    
+    //эта функция будет вызывать фунцуию showSlides и менять наш слайдИндекс. Ведь когда мы будем перелистывать слайд вперед - мы должны увеличивать на 1, когда назад, то уменьшать на 1.
+    function plusSlides(n) {
+        showSlides(slideIndex +=n);
+    }
+
+    //назначаем обработчики на стрелки
+    prev.addEventListener('click', ()=> {
+        plusSlides(-1);
+    });
+
+    next.addEventListener('click', ()=> {
+        plusSlides(1);
+    });
+ */
 });
