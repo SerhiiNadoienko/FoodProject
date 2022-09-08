@@ -404,14 +404,18 @@ window.addEventListener('DOMContentLoaded', function() {
          dots.push(dot);
     }
 
+    function deleteNotDigits( str) {
+        return +str.replace(/\D/g,'');
+            
+    }
 
     next.addEventListener('click', ()=> {
         //условие если уперлись в конец слайдера
         //в width у нас 500px, мы обрезали px 
-        if(offset== +width.slice(0, width.length -2) * (slides.length -1)) {
+        if(offset== deleteNotDigits(width) * (slides.length -1)) {
             offset =0;
         } else  {
-            offset += +width.slice(0, width.length -2);
+            offset += deleteNotDigits(width);
         }
         slidesField.style.transform = `translateX(-${offset}px)`;
 
@@ -421,6 +425,7 @@ window.addEventListener('DOMContentLoaded', function() {
         } else {
             slideIndex++;
         }
+        
 
         //тут мняем показ акутального числа относительно слайд индекса
         if(slides.length <10) {
@@ -437,9 +442,9 @@ window.addEventListener('DOMContentLoaded', function() {
     prev.addEventListener('click', ()=> {
         //погда мы листаем назад и у нас первый слайд, перем. в конец
         if( offset == 0) {
-            offset= +width.slice(0, width.length -2) * (slides.length -1);
+            offset= deleteNotDigits(width) * (slides.length -1);
         } else  {
-            offset -= +width.slice(0, width.length -2);
+            offset -= deleteNotDigits(width);
         }
         slidesField.style.transform = `translateX(-${offset}px)`;
         // тут меняем слайдиндекс 
@@ -463,7 +468,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 const slideTo =e.target.getAttribute('data-slide-to');
 
                 slideIndex=slideTo;
-                offset= +width.slice(0, width.length -2) * (slideTo -1);
+                offset= deleteNotDigits(width) * (slideTo -1);
 
                 slidesField.style.transform = `translateX(-${offset}px)`;
 
