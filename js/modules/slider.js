@@ -1,19 +1,19 @@
-function slider() {
-    const slides = document.querySelectorAll('.offer__slide'),
+function slider({container, slide, nextArrow, prewArrow, totalCounter, currentCounter, wrapper, field}) {
+    const slides = document.querySelectorAll(slide),
     //получили чтобы поставить pos relative
-    slider = document.querySelector('.offer__slider'),
-    prev=document.querySelector('.offer__slider-prev'),
-    next=document.querySelector('.offer__slider-next'),
+    slider = document.querySelector(container),
+    prev=document.querySelector(prewArrow),
+    next=document.querySelector(nextArrow),
     //общее число картинок слайда
-    total = document.querySelector('#total'),
+    total = document.querySelector(totalCounter),
     //акутальное число на слайде
-    current = document.querySelector('#current'),
+    current = document.querySelector(currentCounter),
     //это наш главный враппер
-    slidesWrapper = document.querySelector('.offer__slider-wrapper'),
+    slidesWrapper = document.querySelector(wrapper),
     //получаем ширину окошка нашего главного вреппера
     width = window.getComputedStyle(slidesWrapper).width,
     //поле с нашими слайдерами
-    slidesField = document.querySelector(".offer__slider-inner");
+    slidesField = document.querySelector(field);
 
     
     let slideIndex =1;
@@ -228,4 +228,4 @@ function slider() {
     });
  */
 }
-module.exports = slider;
+export default slider;

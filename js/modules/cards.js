@@ -1,3 +1,5 @@
+import {getResource} from '../services/services';
+
 function cards() {
     class MenuCard {
         constructor(src, alt, title, descr, price, parentSelector, ...classes) {
@@ -39,16 +41,7 @@ function cards() {
             this.parent.append(element);
         }
     }
-//тут не будет вторым аргументом data, потому что мы ничего не отправляем, а только получаем.
-    const getResource =  async(url,)=> {
-       //соответственно обьекта с настройками не будет. Мы просто делаем запрос,дожидаемся его окончания и трансформируем в обьект.
-        const res = await fetch(url);
-        
-         if(!res.ok) {
-            throw new Error(`Could not fetch ${url}, status: ${res.status}`);
-         }
-        return res.json();
-    };
+
 //этот конструктор будет создаваться столько раз, сколько будет обьектов внутри массива который приедт из сервера.
     /* getResource('http://localhost:3000/menu')
     .then(data=> {
@@ -87,4 +80,4 @@ function cards() {
         })); */
 }
 
-module.exports = cards;
+export default cards;
